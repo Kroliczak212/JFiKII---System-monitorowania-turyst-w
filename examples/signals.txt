@@ -1,0 +1,33 @@
+# Przykładowe sygnały dla systemu monitorowania
+# Format: wind,fog,temperature,rain,avalanche,difficulty
+# Każda linia reprezentuje jeden odczyt w czasie rzeczywistym
+
+# Test 1: Bezpieczne warunki (powinno być E1)
+w1,f1,t1,r1,a1,d2
+
+# Test 2: Średnie warunki na łatwym szlaku (E2)
+w2,f2,t1,r1,a3,d1
+
+# Test 3: Niebezpieczne warunki na trudnym szlaku (E4/E5)
+w3,f3,t3,r3,a4,d4
+
+# Test 4: Bardzo słaba widoczność (mgła f3) na średnim szlaku (E3/E4)
+w1,f3,t1,r1,a1,d2
+
+# Test 5: Ekstremalny wiatr na łatwym szlaku (E4/E5)
+w3,f1,t1,r1,a1,d1
+
+# Test 6: Zagrożenie lawinowe na bardzo trudnym szlaku (E5)
+w1,f1,t1,r1,a5,d4
+
+# Test 7: Złożone warunki - wiele czynników (E4)
+w2,f2,t2,r2,a2,d3
+
+# Test 8: Graniczny przypadek E2/E3
+w2,f2,t1,r1,a2,d4
+
+# Test 9: Wszystkie czynniki na maksimum (E5)
+w3,f3,t3,r3,a5,d4
+
+# Test 10: Łatwy szlak, bezpieczne warunki (E1)
+w1,f1,t1,r1,a1,d1

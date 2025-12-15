@@ -1,0 +1,108 @@
+/* ============================================================================
+   REGUŁY SYSTEMU MONITOROWANIA TURYSTÓW GÓRSKICH - WERSJA POPRAWIONA
+   Źródło: Tabela 5 (Predefined reaction levels, or alerts A, for different
+           threat levels ThLev) - Z LOGIKĄ KONIUNKCJI (AND)
+
+   Akademia Tarnowska - Języki formalne i kompilatory II
+   Autorzy: Szymon Adamczyk, Bartłomiej Król
+
+   UWAGA: Ta wersja używa kombinacji warunków (AND) zamiast pojedynczych (OR)
+   aby poprawnie rozróżnić poziomy zagrożenia E1-E5
+   ============================================================================
+
+   LEGENDA SYGNAŁÓW:
+
+   Wiatr (Wind):        w1, w2, w3  - rosnące trudności
+   Mgła (Fog):          f1, f2, f3  - rosnące trudności
+   Temperatura (Temp):  t1, t2, t3  - rosnące trudności
+   Deszcz (Rain):       r1, r2, r3  - rosnące trudności
+   Lawina (Avalanche):  a1, a2, a3, a4, a5 - rosnące zagrożenie
+
+   Poziomy trudności szlaku:
+   d1 - łatwy
+   d2 - średni
+   d3 - trudny
+   d4 - bardzo trudny
+
+   POZIOMY ZAGROŻENIA:
+   E1 - Niskie (zielony)
+   E2 - Średnie (żółty)
+   E3 - Podwyższone (pomarańczowy)
+   E4 - Wysokie (czerwony)
+   E5 - Krytyczne (czarny) - zakaz wstępu
+   ============================================================================ */
+
+/* ---------------------------------------------------------------------------
+   E5 - KRYTYCZNE ZAGROŻENIE (CZARNY)
+
+   Walking is impossible, emergency action is necessary, tourists entering
+   the routes is strictly forbidden
+
+   WYMAGA: Kombinacji EKSTREMALNYCH warunków (wiele złych warunków naraz)
+   --------------------------------------------------------------------------- */
+E5 {
+  d4: (w3 & f3) | (w3 & t3) | (f3 & t3) | (w3 & r3) | (f3 & r3) | (t3 & r3) | a5 | (w3 & f2 & t2) | (a4 & w3) | (a4 & f3) | (a4 & t3);
+  d3: (w3 & f3) | (w3 & t3) | (f3 & t3) | a5 | (a4 & w3) | (a4 & f3) | (w3 & f3 & r2) | (t3 & r3);
+  d2: (w3 & f3) | (w3 & t3) | a5 | (a4 & w3) | (a4 & f3) | (f3 & t3 & r2);
+  d1: (w3 & f3 & t3) | a5 | (a4 & w3 & f3);
+}
+
+/* ---------------------------------------------------------------------------
+   E4 - WYSOKIE ZAGROŻENIE (CZERWONY)
+
+   Dangerous situations, can cause serious threat and needs to be constantly
+   monitored, climbing only allowed for experienced hikers, possibility of
+   sending a drone
+
+   WYMAGA: Kombinacji POWAŻNYCH warunków lub jednego ekstremalnego + średniego
+   --------------------------------------------------------------------------- */
+E4 {
+  d4: (w3 & f2) | (w3 & t2) | (w2 & f3) | (f3 & t2) | (w3 & r2) | (f3 & r2) | (t3 & r2) | a4 | (w3 & a3) | (f3 & a3) | (a3 & t3);
+  d3: (w3 & f2) | (w2 & f3) | (w3 & t2) | (f3 & t2) | a4 | (w3 & r2) | (f3 & r2) | (a3 & w3) | (a3 & f3);
+  d2: (w3 & f2) | (w3 & t2) | (w3 & r2) | a4 | (a3 & w3) | (a3 & f3) | (f3 & r2);
+  d1: (w3 & f2 & t2) | a4 | (a3 & w3 & f2);
+}
+
+/* ---------------------------------------------------------------------------
+   E3 - PODWYŻSZONE ZAGROŻENIE (POMARAŃCZOWY)
+
+   Existence of risky situations, possibility of sending a drone, including
+   a BTS-drone, in order to obtain more precise data, intensified monitoring
+
+   WYMAGA: Kombinacji UMIARKOWANYCH warunków lub jednego poważnego
+   --------------------------------------------------------------------------- */
+E3 {
+  d4: (w2 & f2) | (w2 & t2) | (f2 & t2) | w3 | f3 | t3 | (r2 & w2) | (r2 & f2) | a3 | (a2 & w3) | (a2 & f3);
+  d3: (w2 & f2) | (w2 & t2) | w3 | f3 | t3 | (r2 & w2) | a3 | (a2 & w3) | (a2 & f3);
+  d2: (w2 & f2) | w3 | f3 | (t2 & r2) | a3 | (a2 & w3);
+  d1: (w2 & f2 & t2) | w3 | (a3 & w2) | (a2 & w3);
+}
+
+/* ---------------------------------------------------------------------------
+   E2 - ŚREDNIE ZAGROŻENIE (ŻÓŁTY)
+
+   Partially disadvantageous conditions, requires the assessment of a local
+   or temporary threat, monitoring
+
+   WYMAGA: POJEDYNCZE umiarkowane zagrożenia
+   --------------------------------------------------------------------------- */
+E2 {
+  d4: w2 | f2 | t2 | r2 | a2;
+  d3: w2 | f2 | t2 | r2 | a2;
+  d2: w2 | f2 | t2 | a2;
+  d1: (w2 & f2) | (w2 & t2) | a2;
+}
+
+/* ---------------------------------------------------------------------------
+   E1 - NISKIE ZAGROŻENIE (ZIELONY)
+
+   Nothing alarming happens, normal monitoring
+
+   DOTYCZY: Wszystkich pozostałych przypadków (warunki optymalne)
+   --------------------------------------------------------------------------- */
+E1 {
+  d4: others;
+  d3: others;
+  d2: others;
+  d1: others;
+}

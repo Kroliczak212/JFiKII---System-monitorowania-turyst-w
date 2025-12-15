@@ -1,0 +1,39 @@
+{
+  // Python
+  "python.defaultInterpreterPath": "${workspaceFolder}/venv/Scripts/python.exe",
+  "python.terminal.activateEnvironment": true,
+
+  // Linting
+  "python.linting.enabled": true,
+  "python.linting.flake8Enabled": true,
+  "python.linting.mypyEnabled": true,
+
+  // Formatting
+  "python.formatting.provider": "black",
+  "editor.formatOnSave": true,
+
+  // Testing
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestArgs": [
+    "tests"
+  ],
+
+  // Editor
+  "editor.rulers": [88, 120],
+  "editor.tabSize": 4,
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/*.pyc": true,
+    "**/venv": true
+  },
+
+  // ANTLR
+  "antlr4.generation": {
+    "mode": "external",
+    "language": "Python3",
+    "outputDir": "src/parser/generated",
+    "listeners": false,
+    "visitors": true
+  }
+}

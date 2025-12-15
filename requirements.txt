@@ -1,0 +1,22 @@
+# ANTLR Runtime
+antlr4-python3-runtime==4.13.1
+
+# CLI & Formatting
+rich==13.9.4
+colorama==0.4.6
+
+# Data Validation (opcjonalne - zakomentowane, wymaga Rust Compiler)
+# pydantic==2.10.6
+
+# Configuration
+python-dotenv==1.0.1
+
+# Testing
+pytest==8.3.4
+pytest-cov==6.0.0
+pytest-mock==3.14.0
+
+# Development (opcjonalne - możesz odkomentować później)
+# black==24.10.0
+# flake8==7.1.1
+# mypy==1.14.1
